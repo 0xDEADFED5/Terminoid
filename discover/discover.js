@@ -12,6 +12,7 @@ async function onLoad(e) {
     const r = await fetch('/random');
     const o = await r.json();
     shuffle(o);
+    document.getElementById('loading').remove();
     o.forEach(add);
     function add(value) {
         let a = document.createElement('a');

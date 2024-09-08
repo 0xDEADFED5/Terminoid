@@ -250,7 +250,7 @@ async function onUpload(e) {
         const fixed = await trimCanvas(canvas);
         const pic = fixed.toDataURL('image/png');
         const size = (cast.length/(1024*1024)).toFixed(2) + 'MiB (' + (el_file.files[0].size/(1024*1024)).toFixed(2) + 'MiB)';
-        const onProgress = progress => p.innerHTML = '<br>Upload progress: ' + (progress * 100).toString() + '%';
+        const onProgress = progress => p.innerHTML = '<br>Upload progress: ' + (progress * 100).toFixed(2).toString() + '%';
         const response = await uploadData('/upload', cast, pic, t_input.value, d_input.value, size, onProgress);
         if (response.status !== 200) {
             alert('Upload failed!');

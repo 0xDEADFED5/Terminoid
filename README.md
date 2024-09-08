@@ -19,6 +19,7 @@ Frontend is:
 - Chapters
 - Better mobile experience
 - Pipeline Redis queries
+- Better loading for Popular/Discover
 
 ### Linux Installation
 - Install Openresty from apt or whatever

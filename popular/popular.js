@@ -10,6 +10,7 @@ async function download(id) {
 async function onLoad(e) {
     const r = await fetch('/hot');
     const o = await r.json();
+    document.getElementById('loading').remove();
     o.forEach(add);
     function add(value) {
         let a = document.createElement('a');
