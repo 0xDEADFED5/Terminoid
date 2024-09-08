@@ -28,4 +28,5 @@ Frontend is:
 - [config instructions](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/#install-redis-properly)
 - Put the nginx.conf from this repo root where it goes, something like `/usr/local/openresty/nginx/conf`
 - Copy the directory structure from repo root wherever your html goes, something like `/usr/local/openresty/nginx/html`
+- mkdir `/var/log/openresty` and make sure openresty has permission to use it (or put your logs somewhere else)
 - Do your firewall and HTTPS stuff as needed
