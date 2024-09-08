@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>Terminoid: About</title>
+  <link rel="stylesheet" href="https://unpkg.com/terminal.css@0.7.4/dist/terminal.min.css" />
+  <style>
+        :root {
+            --global-font-size: 15px;
+            --global-line-height: 1.4em;
+            --global-space: 10px;
+            --font-stack: 'Fira Code', Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            --mono-font-stack: 'Fira Code', Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            --background-color: #222225;
+            --page-width: 60em;
+            --font-color: #e8e9ed;
+            --invert-font-color: #222225;
+            --secondary-color: #a3abba;
+            --tertiary-color: #a3abba;
+            --primary-color: #62c4ff;
+            --error-color: #ff3c74;
+            --progress-bar-background: #3f3f44;
+            --progress-bar-fill: #62c4ff;
+            --code-bg-color: #3f3f44;
+            --input-style: solid;
+            --display-h1-decoration: none;
+        }
+        .terminal-prompt {
+            font-size: 21px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="terminal-nav">
+    <header class="terminal-logo">
+      <div class="logo terminal-prompt"><a href="/" class="no-style">Terminoid</a></div>
+    </header>
+    <nav class="terminal-menu">
+      <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+        <li property="itemListElement" typeof="ListItem"><a href="/" property="item" typeof="WebPage" class="menu-item"><span property="name">Home</span></a><meta property="position" content="1"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/discover" property="item" typeof="WebPage" class="menu-item"><span property="name">Discover</span></a><meta property="position" content="2"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/popular" property="item" typeof="WebPage" class="menu-item"><span property="name">Popular</span></a><meta property="position" content="3"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/about" property="item" typeof="WebPage" class="menu-item"><span property="name">About</span></a><meta property="position" content="4"></li>
+        <li style="height: 28px;"><a class="github-button" href="https://github.com/0xDEADFED5/terminoid" data-size="large" data-show-count="true" aria-label="Star 0xDEADFED5/terminoid on GitHub" target="_blank">terminoid</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div class="container">
+    <h4>What is this?</h4>
+        <p>This website hosts and plays recordings that adhere to this format: <a href="https://docs.asciinema.org/manual/asciicast/v2/" target="_blank">asciicast v2</a></p>
+        <p>It's an extremely simple version of: <a href="https://github.com/asciinema/asciinema-server" target="_blank">asciinema-server</a></p>
+    <h4>Why?</h4>
+        <p>Because I wanted a player that supports all the <a href="https://xtermjs.org/docs/api/vtfeatures/" target="_blank">control codes</a> that xterm.js does.</p>
+    <h4>Privacy?</h4>
+        <p>This website doesn't require or want any of your personal information. Also, it's free and open source.</p>
+    <h4>Limitations?</h4>
+        <p>There is no search and there are no accounts.</p>
+        <p>Upload limits = 16MiB max (after being gzipped by browser) and 1 upload per minute per IP. I can increase if needed.</p>
+    <h4>Features?</h4>
+        <p>You can upload or play recordings and optionally delete them from your personal link after uploading.  That's about it so far.</p>
+    <h4>License?</h4>
+        <p><a href="/LICENSE.txt" target="_blank">BSD-3-Clause</a></p>
+    <h4>What's Terminoid built with?</h4>
+        <p>Backend:
+            <a href="https://openresty.org" target="_blank">OpenResty</a> + <a href="https://redis.io" target="_blank">Redis</a></p>
+        <p>Front:
+            <a href="https://xtermjs.org" target="_blank">xterm.js</a>,
+            <a href="https://github.com/nodeca/pako" target="_blank">pako</a>,
+            <a href="https://github.com/yorickshan/html2canvas-pro" target="_blank">a fork of html2canvas</a>,
+            <a href="https://github.com/Gioni06/terminal.css" target="_blank">terminal.css</a>,
+            <a href="https://github.com/tonsky/FiraCode" target="_blank">FiraCode font</a>
+        </p>
+    <h4>Why doesn't my browser work?</h4>
+        <p>Cuz it's old and busted, upgrade plz =)</p>
+    <h4>Contact?</h4>
+        <p>admin@terminoid.com</p>
+</div>
+<script src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

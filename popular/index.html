@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>Terminoid: Popular</title>
+  <link rel="stylesheet" href="../terminal.min.css" />
+  <link rel="stylesheet" href="../FiraCode.css" />
+  <style>
+        :root {
+            --global-font-size: 18px;
+            --global-line-height: 1.4em;
+            --global-space: 10px;
+            --font-stack: 'Fira Code', Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            --mono-font-stack: 'Fira Code', Menlo, Monaco, Lucida Console, Liberation Mono,
+            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+            --background-color: #222225;
+            --page-width: 60em;
+            --font-color: #e8e9ed;
+            --invert-font-color: #222225;
+            --secondary-color: #a3abba;
+            --tertiary-color: #a3abba;
+            --primary-color: #62c4ff;
+            --error-color: #ff3c74;
+            --progress-bar-background: #3f3f44;
+            --progress-bar-fill: #62c4ff;
+            --code-bg-color: #3f3f44;
+            --input-style: solid;
+            --display-h1-decoration: none;
+        }
+		button {
+		  background-color: #222225;
+          border: 2px solid #62c4ff;
+          color: #62c4ff;
+		  padding: 10px 20px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+          font-family: 'Fira Code', monospace;
+          font-weight: 500;
+		  font-size: 18px;
+		}
+        label {
+            color: #62c4ff;
+        }
+        button:hover:not(.disabled):not(.delete) {
+            background: #62c4ff;
+            color: #222225;
+        }
+        .disabled {
+            color: #222225;
+            background: #a3abba;
+            border: 2px solid white;
+        }
+        .terminal-prompt {
+            font-size: 21px;
+        }
+        #results{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 10px;
+        }
+        .result_link:hover{
+          background: #3f3f44;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="terminal-nav">
+    <header class="terminal-logo">
+      <div class="logo terminal-prompt"><a href="/" class="no-style">Terminoid</a></div>
+    </header>
+    <nav class="terminal-menu">
+      <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+        <li property="itemListElement" typeof="ListItem"><a href="/" property="item" typeof="WebPage" class="menu-item"><span property="name">Home</span></a><meta property="position" content="1"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/discover/" property="item" typeof="WebPage" class="menu-item"><span property="name">Discover</span></a><meta property="position" content="2"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/popular/" property="item" typeof="WebPage" class="menu-item"><span property="name">Popular</span></a><meta property="position" content="3"></li>
+        <li property="itemListElement" typeof="ListItem"><a href="/about/" property="item" typeof="WebPage" class="menu-item"><span property="name">About</span></a><meta property="position" content="4"></li>
+        <li style="height: 28px;"><a class="github-button" href="https://github.com/0xDEADFED5/terminoid" data-size="large" data-show-count="true" aria-label="Star 0xDEADFED5/terminoid on GitHub" target="_blank">terminoid</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<div id="results"></div>
+<script src="popular.js"></script>
+<script src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>
