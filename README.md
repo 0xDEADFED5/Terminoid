@@ -1,10 +1,12 @@
 ## Terminoid.com website
 This website hosts and plays recordings that adhere to this format: [asciicast v2](https://docs.asciinema.org/manual/asciicast/v2/)
+
 It's an extremely simple version of: [asciinema-server](https://github.com/asciinema/asciinema-server)
 
 ### Features
 - Small and barebones
 - Backend is entirely Openresty and Redis
+
 Frontend is:
 - [xterm.js](https://xtermjs.org)
 - [pako](https://github.com/nodeca/pako)
