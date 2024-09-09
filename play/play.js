@@ -210,15 +210,11 @@ async function onLoad(e) {
     let id = params.get("id");
     let key = params.get("key");
     if (!id) {
-        // document.getElementById('play').remove();
-        // document.getElementById('download').remove();
         document.getElementById('title').innerHTML = 'Invalid link';
         return;
     }
     const dl = await download(id);
     if (!dl) {
-        // document.getElementById('play').remove();
-        // document.getElementById('download').remove();
         document.getElementById('title').innerHTML = 'Invalid link';
         return;
     }
