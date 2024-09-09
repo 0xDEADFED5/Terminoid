@@ -48,7 +48,7 @@ async function render_lines() {
             }
             console.log('fin')
             clearInterval(interval_id);
-            document.getElementById('play').innerText = 'Replay';
+            document.getElementById('play').innerHTML = 'Replay';
             index = 0;
             pause_time = null;
             playing = false;
@@ -123,7 +123,7 @@ async function onPlay(e) {
             const elapsed = Date.now() - pause_time;
             play_start += elapsed;
             interval_id = setInterval(render_lines, 3);
-            document.getElementById('play').innerText = 'Pause';
+            document.getElementById('play_button').innerHTML = 'Pause';
             return;
         }
         const pic = document.getElementById('pic');
@@ -133,12 +133,12 @@ async function onPlay(e) {
         if (term === null) {
             await init_term();
         }
-        document.getElementById('play').innerText = 'Pause';
+        document.getElementById('play_button').innerHTML = 'Pause';
         play_cast();
     } else {
         playing = false;
         pause_time = Date.now();
-        document.getElementById('play').innerText = 'Resume';
+        document.getElementById('play_button').innerHTML = 'Resume';
     }
 }
 
@@ -234,6 +234,7 @@ async function onLoad(e) {
         d.innerHTML = '<br>' + dl.desc;
         document.getElementById('size').innerHTML = 'size: ' + dl.size
         let play = document.createElement('button');
+        play.id = 'play_button';
         play.onclick = onPlay;
         play.innerHTML = 'Play';
         document.getElementById('play').appendChild(play);
