@@ -48,7 +48,7 @@ async function render_lines() {
             }
             console.log('fin')
             clearInterval(interval_id);
-            document.getElementById('play').innerHTML = 'Replay';
+            document.getElementById('play_button').innerHTML = 'Replay';
             index = 0;
             pause_time = null;
             playing = false;
