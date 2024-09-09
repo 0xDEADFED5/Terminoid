@@ -1,6 +1,5 @@
 // Copyright 2024 0xDEADFED5
 const el_terminal = document.getElementById('terminal');
-const el_play = document.getElementById('play');
 let term = null;
 let cast_time = [];
 let cast_code = [];
@@ -108,8 +107,7 @@ async function encode(array) {
 
 async function download(id) {
     const response = await fetch('/download?id=' + id);
-    const el_title = document.getElementById('title');
-    el_title.innerHTML = '<br>Downloading ... ';
+    document.getElementById('title').innerHTML = '<br>Downloading ... ';
     if (response.status !== 200) {
         el_title.innerHTML = '<br>Download failed';
         return false;
@@ -212,15 +210,15 @@ async function onLoad(e) {
     let id = params.get("id");
     let key = params.get("key");
     if (!id) {
-        document.getElementById('play').remove();
-        document.getElementById('download').remove();
+        // document.getElementById('play').remove();
+        // document.getElementById('download').remove();
         document.getElementById('title').innerHTML = 'Invalid link';
         return;
     }
     const dl = await download(id);
     if (!dl) {
-        document.getElementById('play').remove();
-        document.getElementById('download').remove();
+        // document.getElementById('play').remove();
+        // document.getElementById('download').remove();
         document.getElementById('title').innerHTML = 'Invalid link';
         return;
     }
@@ -239,6 +237,10 @@ async function onLoad(e) {
         d.style.width = img.naturalWidth + "px";
         d.innerHTML = '<br>' + dl.desc;
         document.getElementById('size').innerHTML = 'size: ' + dl.size
+        let play = document.createElement('button');
+        play.onclick = onPlay;
+        play.innerHTML = 'Play';
+        document.getElementById('play').appendChild(play);
     }
     // base64 encoded and compressed asciicast -> bytes -> decompress bytes -> decode to text
     const cast_b64 = await fetch('data:application/octet-stream;base64,' + dl.cast);
@@ -246,16 +248,14 @@ async function onLoad(e) {
     const uz = await pako.inflate(cast);
     const dec = new TextDecoder("utf-8");
     const downloaded_cast = dec.decode(uz).trim();
-    const el_download = document.getElementById('download');
+    const el_download = document.createElement('button');
     el_download.addEventListener('click', e => onDownload(e));
+    el_download.innerHTML = 'Download';
+    document.getElementById('download').appendChild(el_download);
     async function onDownload(e) {
         saveBlob(dl.title + '.cast', downloaded_cast);
     }
-    el_download.className = null;
-    el_download.disabled = false;
     parse_cast(downloaded_cast);
-    el_play.className = null;
-    el_play.disabled = false;
 
     if (key) {
         // client is claiming to have the key, so display delete button
@@ -299,8 +299,5 @@ async function onLoad(e) {
         s.appendChild(share);
         s.appendChild(copy_button);
     }
-}
-if (el_play) {
-    el_play.addEventListener('click', e => onPlay(e));
 }
 document.addEventListener("DOMContentLoaded", e => onLoad(e));

@@ -36,9 +36,15 @@ async function onLoad(e) {
         let s = document.createElement('p');
         s.innerHTML = 'size: ' + value.size;
         img.onload = () => {
-            img.style.width = img.naturalWidth + "px";
-            d.style.width = img.naturalWidth + "px";
-            div.style.width = img.naturalWidth + 20 + "px";
+            if (img.naturalWidth > window.innerWidth) {
+                img.style.width = '100%';
+                div.style.width = '100%';
+            }
+            else {
+                img.style.width = img.naturalWidth + "px";
+                d.style.width = img.naturalWidth + "px";
+                div.style.width = img.naturalWidth + 20 + "px";
+            }
             div.appendChild(t);
             div.appendChild(img);
             div.appendChild(d);

@@ -60,20 +60,6 @@ const uploadData = (url, cast, pic, title, desc, size, onProgress) =>
         xhr.send(fd);
     });
 
-function saveBlob(filename, data) {
-    const blob = new Blob([data], {type: 'application/octet-stream'});
-    if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveBlob(blob, filename);
-    } else {
-        const elem = window.document.createElement('a');
-        elem.href = window.URL.createObjectURL(blob);
-        elem.download = filename;
-        document.body.appendChild(elem);
-        elem.click();
-        document.body.removeChild(elem);
-    }
-}
-
 async function encode(array) {
     return new Promise((resolve) => {
         const blob = new Blob([array]);
@@ -85,14 +71,6 @@ async function encode(array) {
         };
         reader.readAsDataURL(blob);
     });
-}
-
-async function download(id) {
-    const response = await fetch('/download?id=' + id);
-    const el_title = document.getElementById('title');
-    el_title.innerHTML = '<br>Downloading ... ';
-    const body = await response.json();
-    return body;
 }
 
 function getTextWidth(count, font) {
