@@ -171,7 +171,7 @@ async function init_term() {
         }
     }
     let fontSize = 16;
-    let width = await getTextWidth(cast_header.width, '16px Fira Code');
+    let width = await getTextWidth(cols, '16px Fira Code');
     if (width > window.innerWidth) {
         const res = await getMaxTextSize();
         fontSize = res[0];
@@ -313,8 +313,6 @@ async function onWindowResize(e) {
     if (term) {
         let fontSize = 16;
         let width = await getTextWidth(cast_header.width, '16px Fira Code');
-        console.log('width for 16px = ' + width);
-        console.log('window width = ' + window.innerWidth);
         if (width > window.innerWidth) {
             const res = await getMaxTextSize();
             fontSize = res[0];
@@ -327,7 +325,7 @@ async function onWindowResize(e) {
         } else {
             document.getElementById('terminal').style.width = width.toString() + 'px';
             const r = document.getElementById('result');
-            r.style.width = (width + 20).toString() + 'px';
+            r.style.width = width.toString() + 'px';
             r.className = 'container';
         }
         fitAddon.fit();
