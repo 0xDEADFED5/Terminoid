@@ -19,7 +19,7 @@ Frontend is:
 - Chapters
 - Better mobile experience
 - Pipeline Redis queries
-- Better loading for Popular/Discover
+- When missing asciicast header, calculate a likely maximum terminal width
 
 ### Linux Installation
 - Install Openresty from apt or whatever

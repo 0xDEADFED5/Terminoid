@@ -24,7 +24,7 @@ async function parse_cast(data) {
         let line = '';
         for (let x = 1; x < lines.length; x++) {
             line = JSON.parse(lines[x]);
-            if (line.length == 3) {
+            if (line.length === 3) {
                 cast_time[x - 1] = line[0];
                 cast_code[x - 1] = line[1];
                 cast_data[x - 1] = line[2];
@@ -42,8 +42,8 @@ async function render_lines() {
     const elapsed = (Date.now() - play_start) / 1000;
     let buffer = '';
     while (playing) {
-        if (index == cast_len) {
-            if (buffer != '') {
+        if (index === cast_len) {
+            if (buffer !== '') {
                 term.write(buffer);
             }
             console.log('fin')
@@ -55,15 +55,14 @@ async function render_lines() {
             return;
         }
         if (elapsed >= cast_time[index]) {
-            if (cast_code[index] != 'm') {
+            if (cast_code[index] !== 'm') {
                 buffer += cast_data[index];
                 index += 1;
             } else {
                 index += 1;
             }
-            continue;
         } else {
-            if (buffer != '') {
+            if (buffer !== '') {
                 term.write(buffer);
             }
             return;
@@ -92,28 +91,14 @@ function saveBlob(filename, data) {
     }
 }
 
-async function encode(array) {
-    return new Promise((resolve) => {
-        const blob = new Blob([array]);
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            const dataUrl = event.target.result;
-            const [_, base64] = dataUrl.split(',');
-            resolve(base64);
-        };
-        reader.readAsDataURL(blob);
-    });
-}
-
 async function download(id) {
     const response = await fetch('/download?id=' + id);
     document.getElementById('title').innerHTML = '<br>Downloading ... ';
     if (response.status !== 200) {
-        el_title.innerHTML = '<br>Download failed';
+        document.getElementById('title').innerHTML = '<br>Download failed';
         return false;
     }
-    const body = await response.json();
-    return body;
+    return await response.json();
 }
 
 async function onPlay(e) {
@@ -134,7 +119,7 @@ async function onPlay(e) {
             await init_term();
         }
         document.getElementById('play_button').innerHTML = 'Pause';
-        play_cast();
+        await play_cast();
     } else {
         playing = false;
         pause_time = Date.now();
@@ -142,7 +127,7 @@ async function onPlay(e) {
     }
 }
 
-function getTextWidth(count, font) {
+async function getTextWidth(count, font) {
     const text = 'W'.repeat(count);
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -150,8 +135,21 @@ function getTextWidth(count, font) {
     const metrics = context.measureText(text);
     return metrics.width;
 }
+
 const fitAddon = new FitAddon.FitAddon();
-async function onResize(e) {
+
+async function getMaxTextSize() {
+    let width = 0;
+    for (let x = 15; x > 5; x--) {
+        width = await getTextWidth(cast_header.width, x.toString() + 'px Fira Code');
+        if (width < window.innerWidth) {
+            return [x, width];
+        }
+    }
+    return [5, await getTextWidth(cast_header.width, '5px Fira Code')];
+}
+
+async function onTermResize(e) {
     fitAddon.fit();
 }
 
@@ -164,44 +162,40 @@ async function init_term() {
     webglAddon.onContextLoss(e => {
         webglAddon.dispose();
     });
-    if (cast_header != '') {
+    let cols = 80;
+    let rows = 24;
+    if (cast_header !== '') {
         if (cast_header.width && cast_header.height) {
-            const width = getTextWidth(cast_header.width, '16px Fira Code');
-            el_terminal.style.width = width.toString() + "px";
-            term = new Terminal({
-                convertEol: true,
-                allowProposedApi: true,
-                cols: parseInt(cast_header.width),
-                rows: parseInt(cast_header.height),
-                fontFamily: 'Fira Code',
-                fontSize: 16,
-                cursorBlink: true,
-                customGlyphs: true,
-                cursorStyle: 'block',
-            });
-        } else {
-            term = new Terminal({
-                convertEol: true,
-                allowProposedApi: true,
-                cols: 80,
-                rows: 24,
-                fontFamily: 'Fira Code',
-                fontSize: 16,
-                cursorBlink: true,
-                customGlyphs: true,
-                cursorStyle: 'block',
-            });
+            cols = cast_header.width;
+            rows = cast_header.height;
         }
-    } else {
-        return false;
     }
-    term.onResize(e => onResize(e));
+    let fontSize = 16;
+    let width = await getTextWidth(cast_header.width, '16px Fira Code');
+    if (width > window.innerWidth) {
+        const res = await getMaxTextSize();
+        fontSize = res[0];
+        width = res[1];
+    }
+    el_terminal.style.width = width.toString() + "px";
+    term = new Terminal({
+        convertEol: true,
+        allowProposedApi: true,
+        cols: cols,
+        rows: rows,
+        fontFamily: 'Fira Code',
+        fontSize: fontSize,
+        cursorBlink: true,
+        customGlyphs: true,
+        cursorStyle: 'block',
+    });
+    term.onResize(e => onTermResize(e));
     term.loadAddon(webglAddon);
     term.loadAddon(weblinksAddon);
     term.loadAddon(fitAddon);
     term.open(el_terminal);
     fitAddon.fit();
-    el_terminal.style.width = term._core._viewportScrollArea.clientWidth.toString() + "px";
+    // el_terminal.style.width = term._core._viewportScrollArea.clientWidth.toString() + "px";
     return true;
 }
 
@@ -221,18 +215,26 @@ async function onLoad(e) {
     document.getElementById('views').innerHTML = '<br>views: ' + dl.views;
     const img = document.createElement('img');
     img.src = dl.pic;
+    img.id = 'img';
     img.onload = () => {
         const t = document.getElementById('title')
         t.style.width = img.naturalWidth + "px";
         t.innerHTML = dl.title;
-        img.style.width = img.naturalWidth + "px";
-        const p = document.getElementById('pic');
-        p.style.width = img.naturalWidth + 20 + "px";
-        p.appendChild(img);
         const d = document.getElementById('desc')
         d.style.width = img.naturalWidth + "px";
         d.innerHTML = '<br>' + dl.desc;
         document.getElementById('size').innerHTML = 'size: ' + dl.size
+        img.style.width = img.naturalWidth + "px";
+        const p = document.getElementById('pic');
+        p.style.width = img.naturalWidth + 20 + "px";
+        if (img.naturalWidth > window.innerWidth) {
+            t.style.width = '100%';
+            d.style.width = '100%';
+            p.style.width = '100%';
+            img.style.width = '100%';
+            document.getElementById('result').style.width = '100%';
+        }
+        p.appendChild(img);
         let play = document.createElement('button');
         play.id = 'play_button';
         play.onclick = onPlay;
@@ -297,4 +299,39 @@ async function onLoad(e) {
         s.appendChild(copy_button);
     }
 }
-document.addEventListener("DOMContentLoaded", e => onLoad(e));
+async function onWindowResize(e) {
+    const img = document.getElementById('img');
+    if (img) {
+        if (img.naturalWidth > window.innerWidth) {
+            document.getElementById('title').style.width = '100%';
+            document.getElementById('desc').style.width = '100%';
+            document.getElementById('pic').style.width = '100%';
+            img.style.width = '100%';
+            document.getElementById('result').style.width = '100%';
+        }
+    }
+    if (term) {
+        let fontSize = 16;
+        let width = await getTextWidth(cast_header.width, '16px Fira Code');
+        console.log('width for 16px = ' + width);
+        console.log('window width = ' + window.innerWidth);
+        if (width > window.innerWidth) {
+            const res = await getMaxTextSize();
+            fontSize = res[0];
+            // width = res[1];
+            term.options.fontSize = fontSize;
+            document.getElementById('terminal').style.width = '100%';
+            const r = document.getElementById('result');
+            r.style.width = '100%';
+            r.className = null;
+        } else {
+            document.getElementById('terminal').style.width = width.toString() + 'px';
+            const r = document.getElementById('result');
+            r.style.width = (width + 20).toString() + 'px';
+            r.className = 'container';
+        }
+        fitAddon.fit();
+    }
+}
+document.addEventListener('DOMContentLoaded', e => onLoad(e));
+window.addEventListener('resize', e => onWindowResize(e));
