@@ -194,7 +194,7 @@ async function init_term() {
     term.loadAddon(weblinksAddon);
     term.loadAddon(fitAddon);
     term.open(el_terminal);
-    fitAddon.fit();
+    // fitAddon.fit();
     // el_terminal.style.width = term._core._viewportScrollArea.clientWidth.toString() + "px";
     return true;
 }
