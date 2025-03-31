@@ -164,8 +164,6 @@ async function onUpload(e) {
     term.loadAddon(canvasAddon); // fix for corrupted screenshots
     el_terminal.style.width = width.toString() + "px";
     fitAddon.fit();
-    el_terminal.style.width = term._core._viewportScrollArea.clientWidth.toString() + "px";
-    fitAddon.fit();
     let buffer = '';
     for (let x = 0; x < cast_len / 2; x++) {
         if (cast_code[x] !== 'm') {
